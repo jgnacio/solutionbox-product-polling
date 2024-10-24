@@ -7,9 +7,9 @@
   },
   "scripts": {
     "gcp-build": "tsc",
-    "start": "functions-framework --target hello --port 8081",
+    "start": "npm run gcp-build && functions-framework --target UpdateProducts --port 8081",
     "dev": "nodemon ./src/index.ts",
-    "deploy": "gcloud functions deploy cacheProductos --gen2 --runtime=nodejs20 --region=us-west1 --source=. --entry-point=hello --trigger-http --allow-unauthenticated",
+    "deploy": "gcloud functions deploy cacheProductos --gen2 --runtime=nodejs20 --region=us-west1 --source=. --entry-point=UpdateProducts --trigger-http --allow-unauthenticated",
     "test": "jest --runInBand"
   },
   "keywords": [],

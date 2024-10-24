@@ -33,9 +33,10 @@ export const createProduct = async (product: ProductType, provider?: any) => {
   });
 
   if (productExists) {
-    console.log("Product already exists", productExists);
+    console.log("Product already exists");
     // Update Product
     const productUpdated = updateProduct(productExists, product, provider);
+    console.log("Product updated", productUpdated);
     return productUpdated;
   } else {
     let newProduct;
