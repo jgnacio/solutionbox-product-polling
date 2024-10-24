@@ -14,11 +14,17 @@ require("dotenv").config();
 const PASSWORD_FUNCTION = process.env.PASSWORD_FUNCTION;
 const prisma = new PrismaClient();
 
-const main = async () => {
+const main = async (providerName: string) => {
   try {
     let products: ProductType[] = [];
+
+    if (providerName !== "solutionbox") {
+      console.error("Invalid not supported provider", providerName);
+      return { error: "Invalid not supported provider" };
+    }
+
     const provider = await prisma.provider.findFirst({
-      where: { name: "Solutionbox" },
+      where: { name: providerName },
     });
 
     if (!provider) {
@@ -105,8 +111,12 @@ export const UpdateProducts: HttpFunction = async (req, res) => {
     return res.status(401).json({ error: "Invalid password" });
   }
 
+  if (!req.body.provider) {
+    return res.status(401).json({ error: "Invalid provider" });
+  }
+
   try {
-    const result = await main();
+    const result = await main(req.body.provider);
 
     if (result.error) {
       return res.status(500).json({
