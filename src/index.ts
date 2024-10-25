@@ -18,11 +18,6 @@ const main = async (providerName: string) => {
   try {
     let products: ProductType[] = [];
 
-    if (providerName !== "solutionbox") {
-      console.error("Invalid not supported provider", providerName);
-      return { error: "Invalid not supported provider" };
-    }
-
     const provider = await prisma.provider.findFirst({
       where: { name: providerName },
     });
