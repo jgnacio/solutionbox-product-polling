@@ -14,13 +14,14 @@ datasource db {
 }
 
 model Product {
-  id                   String       @id @default(uuid()) // ID único generado automáticamente
+  id                   String         @id @default(uuid()) // ID único generado automáticamente
   sku                  String // SKU del producto
   partNumber           String // Número de parte del producto
   price                Float // Precio del producto
+  priceHistory         PriceHistory[] // Historial de precios
   title                String // Título del producto
-  description          String       @db.Text() // Descripción
-  category             Category     @relation(fields: [categoryId], references: [id]) // Relación con Category
+  description          String         @db.Text() // Descripción
+  category             Category       @relation(fields: [categoryId], references: [id]) // Relación con Category
   categoryId           String // Clave foránea que referencia el ID de Category
   marca                String // Marca del producto
   stock                Int // Cantidad en stock
@@ -29,10 +30,10 @@ model Product {
   onSale               Boolean? // Si está en oferta, opcional
   guaranteeDays        Int? // Días de garantía, opcional
   estimatedArrivalDate DateTime? // Fecha estimada de llegada, opcional
-  provider             Provider     @relation(fields: [providerId], references: [ID_Provider]) // Relación con Provider
+  provider             Provider       @relation(fields: [providerId], references: [ID_Provider]) // Relación con Provider
   providerId           Int
-  createdAt            DateTime     @default(now()) // Fecha de creación
-  updatedAt            DateTime     @updatedAt // Fecha de la última actualización
+  createdAt            DateTime       @default(now()) // Fecha de creación
+  updatedAt            DateTime       @updatedAt // Fecha de la última actualización
 }
 
 model Provider {
@@ -50,6 +51,21 @@ model Category {
   code   String // Código único de la categoría
 
   products Product[] // Relación con productos
+
+  @@unique([name, nameES, code])
+}
+
+model PriceHistory {
+  id                String   @id @default(uuid()) // ID único generado automáticamente
+  price             Float // Precio
+  previousPrice     Float?
+  productId         String // Clave foránea que referencia el ID de Product
+  product           Product  @relation(fields: [productId], references: [id]) // Relación con Product
+  priceUpdatedAt    DateTime @default(now()) // Fecha de creación
+  priceChangeReason String?
+  currency          String   @default("USD")
+
+  @@index([productId, priceUpdatedAt])
 }
 
 enum Availability {

@@ -1,6 +1,7 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { getProductsByPage } from "../../_actions/getProductsByPage";
 import { ProductType } from "../../domain/product/entities/Product";
+import { createAndListCategories } from "../../_actions/defaults/createAllDefaultCategories";
 
 const prisma = new PrismaClient();
 
@@ -40,14 +41,32 @@ export const createProduct = async (product: ProductType, provider?: any) => {
     return productUpdated;
   } else {
     let newProduct;
-    const categoryFound = await prisma.category.findFirst({
+    let categoryFound = await prisma.category.findFirst({
       where: {
         code: product.category.id,
       },
     });
     if (!categoryFound) {
       console.log("Category not found");
-      return;
+      try {
+        await prisma.category.create({
+          data: {
+            name: product.category.name,
+            nameES: product.category.name,
+            code: product.category.id,
+          },
+        });
+      } catch (error) {
+        console.error("Error creating default categories", error);
+      }
+
+      categoryFound = await prisma.category.findFirst({
+        where: {
+          code: product.category.id,
+        },
+      });
+
+      if (!categoryFound) return;
     }
     try {
       newProduct = await prisma.product.create({
@@ -76,8 +95,6 @@ export const createProduct = async (product: ProductType, provider?: any) => {
     }
     return newProduct;
   }
-
-  return productExists;
 };
 
 export const updateProduct = async (
@@ -88,6 +105,17 @@ export const updateProduct = async (
   const partNumber = productUpdated.partNumber
     ? productUpdated.partNumber[0].partNumber
     : productDatabase.partNumber;
+
+  if (productDatabase.price !== productUpdated.price) {
+    await prisma.priceHistory.create({
+      data: {
+        productId: productDatabase.id,
+        price: productUpdated.price,
+        priceUpdatedAt: new Date(),
+        previousPrice: productDatabase.price,
+      },
+    });
+  }
 
   const updatedProduct = await prisma.product.update({
     where: {
@@ -120,7 +148,7 @@ export const filterProducts = async (
   categoryCode: string,
   providerId: number
 ) => {
-  const category = await prisma.category.findFirst({
+  let category = await prisma.category.findFirst({
     where: {
       code: categoryCode,
     },
@@ -128,7 +156,19 @@ export const filterProducts = async (
 
   if (!category) {
     console.log("Category not found");
-    return [];
+    try {
+      await createAndListCategories();
+    } catch (error) {
+      console.error("Error creating default categories", error);
+    }
+
+    category = await prisma.category.findFirst({
+      where: {
+        code: categoryCode,
+      },
+    });
+
+    if (!category) return [];
   }
 
   return await prisma.product.findMany({

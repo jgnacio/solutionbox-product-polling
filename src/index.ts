@@ -1,3 +1,4 @@
+import { PrismaClient } from ".prisma/client/default";
 import { HttpFunction } from "@google-cloud/functions-framework";
 import { ProductType } from "./domain/product/entities/Product";
 import {
@@ -5,9 +6,9 @@ import {
   getAllProducts,
   updateProduct,
 } from "./Utils/Functions/ProductDB";
-import { createAndListCategories } from "./_actions/defaults/createAllDefaultCategories";
 import createAllDefaultProviders from "./_actions/defaults/createAllDefaultProviders";
-import { PrismaClient } from ".prisma/client/default";
+import { createAndListCategories } from "./_actions/defaults/createAllDefaultCategories";
+import { getProductsByProvider } from "./_actions/getProductsByProvider";
 
 require("dotenv").config();
 
@@ -18,18 +19,32 @@ const main = async (providerName: string) => {
   try {
     let products: ProductType[] = [];
 
-    const provider = await prisma.provider.findFirst({
+    let provider = await prisma.provider.findFirst({
       where: { name: providerName },
     });
 
     if (!provider) {
-      console.error("Provider not found");
-      return { error: "Provider not found" };
+      try {
+        await createAllDefaultProviders();
+
+        provider = await prisma.provider.findFirst({
+          where: { name: providerName },
+        });
+      } catch (error) {
+        console.error("Error creating default providers", error);
+      }
+      if (!provider) {
+        console.error("Provider not found");
+        return { error: "Provider not found" };
+      }
     }
 
-    const allProductsDB = await prisma.product.findMany();
-
-    products = await getAllProducts();
+    const allProductsDB = await prisma.product.findMany({
+      where: { providerId: provider.ID_Provider },
+    });
+    products = await getProductsByProvider({
+      provider: provider.name,
+    });
 
     if (products.length === 0) {
       console.log("No products found");

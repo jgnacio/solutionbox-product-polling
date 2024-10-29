@@ -1,3 +1,4 @@
+import { PriceHistory } from "@prisma/client";
 import {
   ProductClassToObj,
   ProductObjToClass,
@@ -17,6 +18,7 @@ export class Product {
   public readonly id: string;
   private readonly sku: string;
   public readonly price: number;
+  public readonly priceHistory: PriceHistory[];
   public title: string;
   public partNumber?: ProductPartNumber[];
   public description: string;
@@ -36,6 +38,7 @@ export class Product {
     partNumber,
     sku,
     price,
+    priceHistory,
     description,
     images,
     category,
@@ -53,6 +56,7 @@ export class Product {
     partNumber?: ProductPartNumber[];
     sku: string;
     price: number;
+    priceHistory: PriceHistory[];
     description: string;
     images: string[];
     category: ProductCategory;
@@ -70,6 +74,7 @@ export class Product {
     this.partNumber = partNumber;
     this.sku = sku;
     this.price = price;
+    this.priceHistory = priceHistory;
     this.title = title;
     this.description = description;
     this.images = images;
@@ -162,6 +167,7 @@ export type ProductType = {
   partNumber?: ProductPartNumber[];
   partNumberToSend?: string;
   price: number;
+  priceHistory: PriceHistory[];
   title: string;
   description: string;
   images: any[];
