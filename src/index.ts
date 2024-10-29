@@ -29,11 +29,6 @@ const main = async (providerName: string) => {
 
     const allProductsDB = await prisma.product.findMany();
 
-    if (allProductsDB.length === 0) {
-      await createAllDefaultProviders();
-      await createAndListCategories();
-    }
-
     products = await getAllProducts();
 
     if (products.length === 0) {
