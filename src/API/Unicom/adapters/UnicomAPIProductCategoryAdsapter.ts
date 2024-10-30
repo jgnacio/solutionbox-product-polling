@@ -1,4 +1,4 @@
-import { IProductCategoryRepository } from "@/domain/product/repositories/IProductCategoryRepository";
+import { IProductCategoryRepository } from "../../../domain/product/repositories/IProductCategoryRepository";
 import { UnicomAPICategory } from "../entities/Category/UnicomAPICategory";
 import {
   defaultUnicomAPICategoryRequest,
@@ -6,7 +6,7 @@ import {
   UnicomAPICategoryRequest,
   UnicomAPIProductRequest,
 } from "../UnicomAPIRequets";
-import { ProductCategory } from "@/domain/product/entities/Product";
+import { ProductCategory } from "../../../domain/product/entities/Product";
 import axios from "axios";
 
 const API_UNICOM_TOKEN = process.env.API_UNICOM_TOKEN;

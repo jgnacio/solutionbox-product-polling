@@ -10,7 +10,7 @@
     "build": "tsc",
     "start": "functions-framework --target UpdateProducts --port 8081",
     "dev": "nodemon ./src/index.ts",
-    "deploy": "gcloud functions deploy cacheProductos --gen2 --runtime=nodejs20 --region=us-west1 --source=. --entry-point=UpdateProducts --trigger-http --allow-unauthenticated",
+    "deploy": "gcloud functions deploy cacheProductos2 --gen2 --runtime=nodejs20 --region=us-west1 --source=. --entry-point=UpdateProducts --trigger-http --allow-unauthenticated",
     "test": "jest --runInBand"
   },
   "keywords": [],

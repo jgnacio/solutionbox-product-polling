@@ -15,7 +15,11 @@ export const createProduct = async (product: ProductType, provider?: any) => {
     return;
   }
 
-  if (!product.title || !product.price || !product.category.id) {
+  if (
+    !product.title ||
+    !product.price ||
+    (!product.category.id && !product.category)
+  ) {
     console.log("Product data is not complete", product);
     return;
   }

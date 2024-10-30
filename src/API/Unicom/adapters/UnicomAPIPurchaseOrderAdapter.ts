@@ -1,4 +1,4 @@
-import { IPurchaseOrderRepository } from "@/domain/product/repositories/IPurchaseOrderRepository";
+import { IPurchaseOrderRepository } from "../../../domain/product/repositories/IPurchaseOrderRepository";
 import axios from "axios";
 import { EntryModes, UnicomAPIPurchaseOrderRequest } from "../UnicomAPIRequets";
 

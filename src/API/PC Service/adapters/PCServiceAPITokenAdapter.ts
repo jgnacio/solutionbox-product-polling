@@ -1,4 +1,7 @@
-import { IAPITokenRepository, IToken } from "@/domain/auth/IAPITokerRepository";
+import {
+  IAPITokenRepository,
+  IToken,
+} from "../../../domain/auth/IAPITokerRepository";
 import axios from "axios";
 
 const API_PCSERVICE_USER = process.env.API_PCSERVICE_USER;

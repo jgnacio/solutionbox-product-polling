@@ -42,6 +42,7 @@ const main = async (providerName: string) => {
     const allProductsDB = await prisma.product.findMany({
       where: { providerId: provider.ID_Provider },
     });
+    console.log("Provider found", provider.name);
     products = await getProductsByProvider({
       provider: provider.name,
     });
@@ -82,6 +83,14 @@ const main = async (providerName: string) => {
         }
       } else {
         console.log("Product not found. Delete: ", productOnDB.sku);
+        const findProduct = await prisma.product.findFirst({
+          where: { id: productOnDB.id },
+        });
+
+        if (!findProduct) {
+          console.log("New Product: ", productOnDB.sku);
+          continue;
+        }
         await prisma.product.delete({
           where: { id: productOnDB.id },
         });

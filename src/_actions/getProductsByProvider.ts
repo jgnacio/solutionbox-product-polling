@@ -1,9 +1,10 @@
-"use server";
+import { UnicomAPITokenAdapter } from "../API/Unicom/adapters/UnicomAPITokenAdapter";
 import { PCServiceAPIProductAdapter } from "../API/PC Service/adapters/PCServiceAPIProductAdapter";
 import { SolutionboxAPIProductAdapter } from "../API/Solutionbox/adapters/SolutionboxAPIProductAdapter";
 import { UnicomAPIProductAdapter } from "../API/Unicom/adapters/UnicomAPIProductAdapter";
 import { Product, ProductType } from "../domain/product/entities/Product";
 import { ProductClassToObj } from "../Utils/Functions/ClassToObject";
+import { defaultUnicomAPIRelevantCategories } from "../API/Unicom/UnicomAPIRequets";
 
 export const getProductsByProvider = async ({
   provider,
@@ -32,19 +33,37 @@ export const getProductsByProvider = async ({
       try {
         const unicomAPIAdapter = new UnicomAPIProductAdapter();
 
-        productsUnicom = await unicomAPIAdapter.getAll({ page: 1 });
+        const categories = defaultUnicomAPIRelevantCategories.map(
+          (category) => category.code
+        );
+
+        for (const category of categories) {
+          const products = await unicomAPIAdapter.getAll({
+            request: {
+              solo_articulos_destacados: false,
+              codigo_grupo: category,
+              tipo_informe: "completo",
+              solo_favoritos: false,
+              rango_articulos_informe: {
+                desde_articulo_nro: 0,
+                hasta_articulo_nro: 200,
+              },
+            },
+          });
+
+          productsUnicom = [...productsUnicom, ...products];
+        }
       } catch (error) {
         console.error("Error getting featured products from Unicom API", error);
       }
       break;
-    case "PC Service":
+    case "PCService":
       try {
         const pcServiceAPIAdapter = new PCServiceAPIProductAdapter();
-
         productsPCService = await pcServiceAPIAdapter.getFeatured();
       } catch (error) {
         console.error(
-          "Error getting products <getAll> from PC Service API",
+          "Error getting products <getFeatured> from PC Service API",
           error
         );
       }

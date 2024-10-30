@@ -40,7 +40,7 @@ type FetchProductsParams =
   | FetchProductsRequest;
 
 export const logoPCService: Provider = {
-  name: "PC Service",
+  name: "PCService",
   mainPageUrl: "https://www.pcservice.com.uy/",
   searchPageUrl:
     "https://www.pcservice.com.uy/others/PCsResults.jsp?queryref=17031901&reforderby=relev&querypage=1&searchstr=",
@@ -70,6 +70,7 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
 
   private async fetchProducts(params: FetchProductsParams): Promise<Product[]> {
     const token = await new PCServiceAPITokenAdapter().getToken();
+    console.log(token);
     if (params.category) {
       let category: PCServiceCategoryCodeType = {
         name: "",
@@ -139,6 +140,8 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
     } else {
       const { method, route, body } = params.request || {};
 
+      console.log("route:", route, "method:", method, "body:", body);
+
       const response = await axios({
         method: method,
         url: `${this.API_PCSERVICE_URL}${route}`,
@@ -147,9 +150,11 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
         },
       })
         .then((response) => {
+          console.log(response.data);
           return response.data as PCServiceProductByDate[];
         })
         .catch((error) => {
+          console.error(error);
           throw new Error(error);
         });
 

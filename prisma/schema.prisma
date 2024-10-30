@@ -60,7 +60,7 @@ model PriceHistory {
   price             Float // Precio
   previousPrice     Float?
   productId         String // Clave foránea que referencia el ID de Product
-  product           Product  @relation(fields: [productId], references: [id]) // Relación con Product
+  product           Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Relación con Product
   priceUpdatedAt    DateTime @default(now()) // Fecha de creación
   priceChangeReason String?
   currency          String   @default("USD")

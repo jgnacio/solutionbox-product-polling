@@ -1,5 +1,5 @@
 import { ProductType } from "../domain/product/entities/Product";
-import { SolutionboxAPIProductAdapter } from "@/API/Solutionbox/adapters/SolutionboxAPIProductAdapter";
+import { SolutionboxAPIProductAdapter } from "../API/Solutionbox/adapters/SolutionboxAPIProductAdapter";
 
 export const getProductBySku = async (
   sku: string
