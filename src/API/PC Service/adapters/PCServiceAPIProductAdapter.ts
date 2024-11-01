@@ -71,7 +71,6 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
 
   private async fetchProducts(params: FetchProductsParams): Promise<Product[]> {
     const token = await new PCServiceAPITokenAdapter().getToken();
-    console.log(token);
     if (params.category) {
       let category: PCServiceCategoryCodeType = {
         name: "",
@@ -141,13 +140,6 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
     } else {
       const { method, route } = params.request || {};
 
-      console.log(
-        "route:",
-        `${this.API_PCSERVICE_URL}${route}`,
-        "method:",
-        method
-      );
-
       const response = await axios
         .get(`${this.API_PCSERVICE_URL}${route}`, {
           headers: {
@@ -155,23 +147,12 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
           },
         })
         .then((response) => {
-          console.log(response);
           return response.data as PCServiceProductByDate[];
         })
         .catch((error) => {
           console.error(error);
           throw new Error(error);
         });
-
-      console.log("Response: ", response);
-      console.log(
-        "route:",
-        `${this.API_PCSERVICE_URL}${route}`,
-        "method:",
-        method,
-        "token:",
-        token.token
-      );
 
       const productList = response.map((product) => {
         let category: PCServiceCategoryCodeType = {
