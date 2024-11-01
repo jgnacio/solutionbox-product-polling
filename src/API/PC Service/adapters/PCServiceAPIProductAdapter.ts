@@ -66,7 +66,6 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
       .then((response) => {
         return response.data as PCServiceProductDetails;
       });
-    console.log(response);
     return response;
   }
 
