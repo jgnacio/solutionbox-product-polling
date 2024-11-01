@@ -110,7 +110,8 @@ export const updateProduct = async (
     ? productUpdated.partNumber[0].partNumber
     : productDatabase.partNumber;
 
-  if (productDatabase.price !== productUpdated.price) {
+  const tolerance = 0.3;
+  if (Math.abs(productDatabase.price - productUpdated.price) > tolerance) {
     await prisma.priceHistory.create({
       data: {
         productId: productDatabase.id,

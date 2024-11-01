@@ -12,6 +12,8 @@ import {
 } from "../PCServiceAPIRequest";
 import { PCServiceAPITokenAdapter } from "./PCServiceAPITokenAdapter";
 import { getDateInYYYY } from "../../../Utils/Functions/DateFunctions";
+require("dotenv").config();
+
 type Request = {
   body?: any;
   route: string;
@@ -138,25 +140,39 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
 
       return productListMapped.flat();
     } else {
-      const { method, route, body } = params.request || {};
+      const { method, route } = params.request || {};
 
-      console.log("route:", route, "method:", method, "body:", body);
+      console.log(
+        "route:",
+        `${this.API_PCSERVICE_URL}${route}`,
+        "method:",
+        method
+      );
 
-      const response = await axios({
-        method: method,
-        url: `${this.API_PCSERVICE_URL}${route}`,
-        headers: {
-          Authorization: `Bearer ${token.token}`,
-        },
-      })
+      const response = await axios
+        .get(`${this.API_PCSERVICE_URL}${route}`, {
+          headers: {
+            Authorization: `Bearer ${token.token}`,
+          },
+        })
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
           return response.data as PCServiceProductByDate[];
         })
         .catch((error) => {
           console.error(error);
           throw new Error(error);
         });
+
+      console.log("Response: ", response);
+      console.log(
+        "route:",
+        `${this.API_PCSERVICE_URL}${route}`,
+        "method:",
+        method,
+        "token:",
+        token.token
+      );
 
       const productList = response.map((product) => {
         let category: PCServiceCategoryCodeType = {

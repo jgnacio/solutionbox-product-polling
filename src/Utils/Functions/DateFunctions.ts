@@ -51,17 +51,30 @@ export const convertDateToISOFormat = (date: Date): string => {
 };
 
 export const getDateInYYYY = (diferencial: number = 0) => {
-  const ahora = new Date();
+  // Crear una fecha y sumar el diferencial
+  const ahora = new Date(Date.now() + diferencial);
 
-  // restar en milisegundos a ahora
-  ahora.setTime(ahora.getTime() + diferencial);
+  // Formatear la fecha en la zona horaria de Montevideo
+  const formatoFecha = new Intl.DateTimeFormat("es-UY", {
+    timeZone: "America/Montevideo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(ahora);
 
-  const año = ahora.getFullYear();
-  const mes = String(ahora.getMonth() + 1).padStart(2, "0"); // Los meses empiezan desde 0
-  const dia = String(ahora.getDate()).padStart(2, "0");
-  const horas = String(ahora.getHours()).padStart(2, "0");
-  const minutos = String(ahora.getMinutes()).padStart(2, "0");
-  const segundos = String(ahora.getSeconds()).padStart(2, "0");
+  // Extraer cada parte de la fecha
+  const año = formatoFecha.find((part) => part.type === "year")?.value || "";
+  const mes = formatoFecha.find((part) => part.type === "month")?.value || "";
+  const dia = formatoFecha.find((part) => part.type === "day")?.value || "";
+  const horas = formatoFecha.find((part) => part.type === "hour")?.value || "";
+  const minutos =
+    formatoFecha.find((part) => part.type === "minute")?.value || "";
+  const segundos =
+    formatoFecha.find((part) => part.type === "second")?.value || "";
 
   return `${año}${mes}${dia}${horas}${minutos}${segundos}`;
 };
