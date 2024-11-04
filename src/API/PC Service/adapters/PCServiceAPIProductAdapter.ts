@@ -8,10 +8,13 @@ import {
 } from "../entities/Product/PCServiceAPIProduct";
 import {
   defaultPCServiceRelevantCategories,
+  PCServiceCategoriesAdapter,
   PCServiceCategoryCodeType,
 } from "../PCServiceAPIRequest";
 import { PCServiceAPITokenAdapter } from "./PCServiceAPITokenAdapter";
 import { getDateInYYYY } from "../../../Utils/Functions/DateFunctions";
+import { Prisma } from "@prisma/client";
+import { RelevantCategoriesType } from "../../../domain/categories/defaultCategories";
 require("dotenv").config();
 
 type Request = {
@@ -192,6 +195,23 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
     }
   }
 
+  async fetchProductsV2(category?: RelevantCategoriesType): Promise<Product[]> {
+    // const token = await new PCServiceAPITokenAdapter().getToken();
+    console.log(category);
+    // if (category) {
+    //   const productsByCategory = await axios.get(
+    //     `${this.API_PCSERVICE_URL}/categories/${category.code}/${category.providerCategories[0].providerCategoryCode}/products`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token.token}`,
+    //       },
+    //     }
+    //   );
+    // }
+
+    return [];
+  }
+
   async getBySKU(sku: string): Promise<Product | null> {
     console.log(sku);
     const skuNumber = parseInt(sku);
@@ -213,14 +233,19 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
     return product;
   }
   async getByCategory(category: string): Promise<Product[]> {
-    const productsByCategory = await this.fetchProducts({
-      category: category,
-    });
+    const categoryExists = PCServiceCategoriesAdapter.categories.find(
+      (categoryBase) => categoryBase.name === category
+    );
+    if (!categoryExists) {
+      return [];
+    }
+    const productsList = this.fetchProductsV2(categoryExists);
 
-    return productsByCategory;
+    return [];
   }
-  getAll(): Promise<Product[]> {
-    throw new Error("Method not implemented.");
+  async getAll(): Promise<Product[]> {
+    this.getByCategory("Notebooks Gamer");
+    return [];
   }
   getFeatured(request?: any): Promise<Product[]> {
     const productsList = this.fetchProducts({

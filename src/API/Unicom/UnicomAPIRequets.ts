@@ -1,3 +1,5 @@
+import { RelevantCategoriesBASE } from "../../domain/categories/defaultCategories";
+
 export interface UnicomAPIProductRequest {
   solo_modificados_desde?: string;
   tipo_informe?: string;
@@ -132,6 +134,207 @@ export const defaultUnicomAPIRelevantCategories = [
     code: "00.04",
   },
 ];
+
+export const UnicomCategoriesAdapter: RelevantCategoriesBASE = {
+  provider: "Unicom",
+  categories: [
+    {
+      name: "Notebooks Gamer",
+      nameES: "Laptops Gamer",
+      code: "notebooks-gamer",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "UltraBooks",
+          providerCategoryCode: "08.25",
+        },
+      ],
+    },
+    {
+      name: "Notebooks Home/Office",
+      nameES: "Laptops Home/Office",
+      code: "notebooks-home-office",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Notebooks",
+          providerCategoryCode: "08.00",
+        },
+      ],
+    },
+    {
+      name: "MacBooks",
+      nameES: "MacBooks",
+      code: "macbooks",
+      provider: "Unicom",
+      providerCategories: [],
+    },
+    {
+      name: "Monitors",
+      nameES: "Monitores",
+      code: "monitors",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "monitors",
+          providerCategoryCode: "02",
+        },
+      ],
+    },
+    {
+      name: "Storage",
+      nameES: "Almacenamiento",
+      code: "storage",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Storage",
+          providerCategoryCode: "01.01",
+        },
+      ],
+    },
+    {
+      name: "Power Supplies",
+      nameES: "Fuentes",
+      code: "power-supplies",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Power Supplies",
+          providerCategoryCode: "01.17",
+        },
+      ],
+    },
+    {
+      name: "Cases",
+      nameES: "Gabinetes",
+      code: "cases",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Cabinets",
+          providerCategoryCode: "01.10",
+        },
+        {
+          providerCategoryName: "Webcams",
+          providerCategoryCode: "00.14",
+        },
+        {
+          providerCategoryName: "For Cabinets",
+          providerCategoryCode: "00.90",
+        },
+      ],
+    },
+    {
+      name: "GPU",
+      nameES: "GPU",
+      code: "gpu",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Graphics Cards",
+          providerCategoryCode: "01.03",
+        },
+      ],
+    },
+    {
+      name: "RAM",
+      nameES: "RAM",
+      code: "ram",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Memories",
+          providerCategoryCode: "01.07",
+        },
+      ],
+    },
+    {
+      name: "Motherboards",
+      nameES: "Motherboards",
+      code: "motherboards",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Motherboards",
+          providerCategoryCode: "01.05",
+        },
+      ],
+    },
+    {
+      name: "Peripherals",
+      nameES: "Periféricos",
+      code: "peripherals",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Accessories",
+          providerCategoryCode: "00",
+        },
+        {
+          providerCategoryName: "Notebooks Accessories",
+          providerCategoryCode: "00.30",
+        },
+        {
+          providerCategoryName: "Headets",
+          providerCategoryCode: "00.02",
+        },
+        {
+          providerCategoryName: "speakers",
+          providerCategoryCode: "00.04",
+        },
+      ],
+    },
+    {
+      name: "CPU",
+      nameES: "CPU",
+      code: "cpu",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "CPU",
+          providerCategoryCode: "01.06",
+        },
+      ],
+    },
+    {
+      name: "Cooling",
+      nameES: "Refrigeración",
+      code: "cooling",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Cooling",
+          providerCategoryCode: "01.01",
+        },
+      ],
+    },
+    {
+      name: "Chairs",
+      nameES: "Sillas",
+      code: "chairs",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Chairs",
+          providerCategoryCode: "62.11",
+        },
+      ],
+    },
+    {
+      name: "Other",
+      nameES: "Otros",
+      code: "other",
+      provider: "Unicom",
+      providerCategories: [
+        {
+          providerCategoryName: "Desks",
+          providerCategoryCode: "62.10",
+        },
+      ],
+    },
+  ],
+};
 
 export interface UnicomAPICartRequest {
   codigo_articulo: string;

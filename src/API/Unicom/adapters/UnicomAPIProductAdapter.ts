@@ -12,6 +12,7 @@ import {
 import {
   defaultUnicomAPIProductRequest,
   UnicomAPIProductRequest,
+  UnicomCategoriesAdapter,
 } from "../UnicomAPIRequets";
 import { UnicomAPIOfferCombo } from "../entities/Product/UnicomAPIOfferCombo";
 import {
@@ -27,6 +28,8 @@ import {
 import { UnicomAPIProductDetailResponse } from "../entities/Product/UnicomAPIProductDetailResponse";
 import { UnicomAPIProductDetailRequest } from "../entities/Product/UnicomAPIProductDetailRequest";
 import axios from "axios";
+import { UnicomAPIProductCategoryAdapter } from "./UnicomAPIProductCategoryAdsapter";
+import { RelevantCategoriesType } from "../../../domain/categories/defaultCategories";
 
 const API_UNICOM_TOKEN = process.env.API_UNICOM_TOKEN;
 const API_UNICOM_URL = process.env.API_UNICOM_URL;
@@ -297,8 +300,39 @@ export class UnicomAPIProductAdapter implements IProductRepository {
     return products;
   }
 
-  getByCategory(category: string): Promise<Product[]> {
-    throw new Error("Method not implemented.");
+  async getAllV2(): Promise<Product[]> {
+    const products = this.getByCategory(UnicomCategoriesAdapter.categories[2]);
+    return products;
+  }
+
+  async getByCategory(category: RelevantCategoriesType): Promise<Product[]> {
+    console.log("category", category);
+    if (category.providerCategories.length > 0) {
+      const productPromises = category.providerCategories.map(
+        (providerCategory) =>
+          this.getAll({
+            request: {
+              solo_articulos_destacados: false,
+              codigo_grupo: providerCategory.providerCategoryCode as string,
+              tipo_informe: "completo",
+              solo_favoritos: false,
+              rango_articulos_informe: {
+                desde_articulo_nro: 0,
+                hasta_articulo_nro: 200,
+              },
+            },
+          })
+      );
+
+      const productsArray = await Promise.all(productPromises);
+
+      // Combina todos los productos en un solo array
+      const allProducts = productsArray.flat();
+      console.log("allProducts", allProducts);
+      return allProducts;
+    }
+
+    return [];
   }
 
   private mapToUnicomRequest(

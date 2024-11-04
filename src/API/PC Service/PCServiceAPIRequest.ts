@@ -1,3 +1,5 @@
+import { RelevantCategoriesBASE } from "../../domain/categories/defaultCategories";
+
 export interface PCServiceCategoryCodeType {
   name: string;
   nameES: string;
@@ -429,3 +431,293 @@ export const defaultPCServiceRelevantCategories = [
     ],
   },
 ];
+
+export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
+  provider: "PC Service",
+  categories: [
+    {
+      name: "Notebooks Gamer",
+      nameES: "Laptops Gamer",
+      code: "notebooks-gamer",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "GAMERS",
+          providerCategoryCode: 68558,
+        },
+      ],
+    },
+    {
+      name: "Notebooks Home/Office",
+      nameES: "Laptops Home/Office",
+      code: "notebooks-home-office",
+      provider: "PC Service",
+
+      providerCategories: [
+        {
+          providerCategoryName: "NOTEBOOKS",
+          providerCategoryCode: 52200,
+        },
+        {
+          providerCategoryName: 'NUEVOS 14" A  15,6"',
+          providerCategoryCode: 3708,
+        },
+
+        {
+          providerCategoryName: "NETBOOKS\r\nNUEVOS",
+          providerCategoryCode: 2089,
+        },
+        {
+          providerCategoryName: "2 EN 1",
+          providerCategoryCode: 72175,
+        },
+      ],
+    },
+    {
+      name: "MacBooks",
+      nameES: "MacBooks",
+      code: "macbooks",
+      provider: "PC Service",
+
+      providerCategories: [
+        {
+          providerCategoryName: "MAC MINI",
+          providerCategoryCode: 85422,
+        },
+        {
+          providerCategoryName: "MACBOOKS",
+          providerCategoryCode: 66831,
+        },
+        {
+          providerCategoryName: "ACCESORIOS MACBOOK",
+          providerCategoryCode: 66825,
+        },
+      ],
+    },
+    {
+      name: "Monitors",
+      nameES: "Monitores",
+      code: "monitors",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "MONITORES GAMING",
+          providerCategoryCode: 71138,
+        },
+      ],
+    },
+    {
+      name: "Storage",
+      nameES: "Almacenamiento",
+      code: "storage",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "HDD 2.5'' EXTERNOS",
+          providerCategoryCode: 2081,
+        },
+        {
+          providerCategoryName: "HDD 3.5'' INTERNOS",
+          providerCategoryCode: 3705,
+        },
+        {
+          providerCategoryName: 'SSD 2.5"  INTERNOS',
+          providerCategoryCode: 15035,
+        },
+        {
+          providerCategoryName: "SSD EXTERNO 2.5",
+          providerCategoryCode: 61068,
+        },
+        {
+          providerCategoryName: "SSD M2",
+          providerCategoryCode: 72423,
+        },
+      ],
+    },
+    {
+      name: "Power Supplies",
+      nameES: "Fuentes",
+      code: "power-supplies",
+      provider: "PC Service",
+      providerCategories: [],
+    },
+    {
+      name: "Cases",
+      nameES: "Gabinetes",
+      code: "cases",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "GABINETES",
+          providerCategoryCode: 399,
+        },
+      ],
+    },
+    {
+      name: "GPU",
+      nameES: "GPU",
+      code: "gpu",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "TARJETAS VIDEO GAMING",
+          providerCategoryCode: 401,
+        },
+      ],
+    },
+    {
+      name: "RAM",
+      nameES: "RAM",
+      code: "ram",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "DIMM DDR4",
+          providerCategoryCode: 67230,
+        },
+        {
+          providerCategoryName: "SODIMM DDR4",
+          providerCategoryCode: 213,
+        },
+        {
+          providerCategoryName: "SODIM DDR5",
+          providerCategoryCode: 89264,
+        },
+      ],
+    },
+    {
+      name: "Motherboards",
+      nameES: "Motherboards",
+      code: "motherboards",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "AMD",
+          providerCategoryCode: 312,
+        },
+        {
+          providerCategoryName: "INTEL",
+          providerCategoryCode: 311,
+        },
+      ],
+    },
+    {
+      name: "Peripherals",
+      nameES: "Periféricos",
+      code: "peripherals",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "ACCESORIOS",
+          providerCategoryCode: 69285,
+        },
+        {
+          providerCategoryName: "BLUETOOTH",
+          providerCategoryCode: 40465,
+        },
+        {
+          providerCategoryName: "CABLEADOS",
+          providerCategoryCode: 359,
+        },
+        {
+          providerCategoryName: "CABLEADOS",
+          providerCategoryCode: 272,
+        },
+        {
+          providerCategoryName: "MICROFONOS",
+          providerCategoryCode: 69413,
+        },
+        {
+          providerCategoryName: "HEADSETS",
+          providerCategoryCode: 69270,
+        },
+        {
+          providerCategoryName: "ACCESORIOS",
+          providerCategoryCode: 306,
+        },
+        {
+          providerCategoryName: "COMBOS CABLEADOS",
+          providerCategoryCode: 382,
+        },
+        {
+          providerCategoryName: "COMBOS ERGONOMICO",
+          providerCategoryCode: 83223,
+        },
+        {
+          providerCategoryName: "COMBOS INALÁMBRICOS",
+          providerCategoryCode: 381,
+        },
+        {
+          providerCategoryName: "TECLADO ERGONOMICO",
+          providerCategoryCode: 83239,
+        },
+        {
+          providerCategoryName: "TECLADOS GAMING",
+          providerCategoryCode: 67672,
+        },
+        {
+          providerCategoryName: "TECLADOS INALÁMBRICOS",
+          providerCategoryCode: 11999,
+        },
+        {
+          providerCategoryName: "TECLADOS MINI",
+          providerCategoryCode: 11886,
+        },
+        {
+          providerCategoryName: "TECLADOS USB",
+          providerCategoryCode: 383,
+        },
+        {
+          providerCategoryName: "WEBCAM",
+          providerCategoryCode: 274,
+        },
+        {
+          providerCategoryName: "BARRAS DE SONIDO",
+          providerCategoryCode: 56276,
+        },
+        {
+          providerCategoryName: "PARLANTES BT",
+          providerCategoryCode: 35371,
+        },
+      ],
+    },
+    {
+      name: "CPU",
+      nameES: "CPU",
+      code: "cpu",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "AMD",
+          providerCategoryCode: 346,
+        },
+      ],
+    },
+    {
+      name: "Cooling",
+      nameES: "Refrigeración",
+      code: "cooling",
+      provider: "PC Service",
+      providerCategories: [
+        {
+          providerCategoryName: "COOLING",
+          providerCategoryCode: 321,
+        },
+      ],
+    },
+    {
+      name: "Chairs",
+      nameES: "Sillas",
+      code: "chairs",
+      provider: "PC Service",
+      providerCategories: [],
+    },
+    {
+      name: "Other",
+      nameES: "Otros",
+      code: "other",
+      provider: "PC Service",
+      providerCategories: [],
+    },
+  ],
+};

@@ -11,7 +11,7 @@ export interface IProductRepository {
     page?: number;
     category?: string;
   }): Promise<Product[]>;
-  getByCategory(category: string): Promise<Product[]>;
+  getByCategory(category: any): Promise<Product[]>;
   getFeatured(request?: any): Promise<Product[]>;
   getOffers(request?: any): Promise<Product[]>;
 }

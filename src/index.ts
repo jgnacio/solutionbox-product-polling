@@ -9,6 +9,7 @@ import {
 import createAllDefaultProviders from "./_actions/defaults/createAllDefaultProviders";
 import { createAndListCategories } from "./_actions/defaults/createAllDefaultCategories";
 import { getProductsByProvider } from "./_actions/getProductsByProvider";
+import { UnicomCategoriesAdapter } from "./API/Unicom/UnicomAPIRequets";
 
 require("dotenv").config();
 
@@ -38,72 +39,75 @@ const main = async (providerName: string) => {
         return { error: "Provider not found" };
       }
     }
+    console.log("Provider found", provider.name);
 
     const allProductsDB = await prisma.product.findMany({
       where: { providerId: provider.ID_Provider },
     });
-    console.log("Provider found", provider.name);
-    products = await getProductsByProvider({
-      provider: provider.name,
-    });
 
-    if (products.length === 0) {
-      console.log("No products found");
-      return {
-        status: "failure",
-        error: "No products found",
-      };
-    }
+    console.log("Products on Database: ", allProductsDB.length);
 
     let updatedProducts = 0;
     let skippedProducts = 0;
     let deletedProducts = 0;
+    for (const category of UnicomCategoriesAdapter.categories) {
+      const productsByCategory = await getProductsByProvider({
+        provider: provider.name,
+        category,
+      });
 
-    for (const productOnDB of allProductsDB) {
-      const product = products.find((p) => p.sku === productOnDB.sku);
+      if (productsByCategory.length === 0) {
+        console.log("No products found");
+        continue;
+      }
 
-      if (product) {
-        const partNumber = product.partNumber
-          ? product.partNumber[0].partNumber
-          : "";
-        if (
-          productOnDB.title !== product.title ||
-          productOnDB.price !== product.price ||
-          productOnDB.stock !== product.stock ||
-          productOnDB.partNumber !== partNumber
-        ) {
-          console.log("Product updated", product.id);
-          await updateProduct(productOnDB, product, provider);
-          updatedProducts++;
-          products = products.filter((p) => p.sku !== product.sku);
+      products = [...products, ...productsByCategory];
+
+      for (const productOnDB of allProductsDB) {
+        const product = products.find((p) => p.sku === productOnDB.sku);
+
+        if (product) {
+          const partNumber = product.partNumber
+            ? product.partNumber[0].partNumber
+            : "";
+          if (
+            productOnDB.title !== product.title ||
+            productOnDB.price !== product.price ||
+            productOnDB.stock !== product.stock ||
+            productOnDB.partNumber !== partNumber
+          ) {
+            console.log("Product updated", product.id);
+            await updateProduct(productOnDB, product, provider);
+            updatedProducts++;
+            products = products.filter((p) => p.sku !== product.sku);
+          } else {
+            console.log("Product skipped", product.sku);
+            skippedProducts++;
+            products = products.filter((p) => p.sku !== product.sku);
+          }
         } else {
-          console.log("Product skipped", product.sku);
-          skippedProducts++;
-          products = products.filter((p) => p.sku !== product.sku);
-        }
-      } else {
-        console.log("Product not found. Delete: ", productOnDB.sku);
-        const findProduct = await prisma.product.findFirst({
-          where: { id: productOnDB.id },
-        });
+          console.log("Product not found. Delete: ", productOnDB.sku);
+          const findProduct = await prisma.product.findFirst({
+            where: { id: productOnDB.id },
+          });
 
-        if (!findProduct) {
-          console.log("New Product: ", productOnDB.sku);
-          continue;
+          if (!findProduct) {
+            console.log("New Product: ", productOnDB.sku);
+            continue;
+          }
+          await prisma.product.delete({
+            where: { id: productOnDB.id },
+          });
+          deletedProducts++;
         }
-        await prisma.product.delete({
-          where: { id: productOnDB.id },
-        });
-        deletedProducts++;
+      }
+
+      console.log("Remaining products to create", products.length);
+
+      for (const product of products) {
+        await createProduct(product, category, provider);
       }
     }
-
-    console.log("Remaining products to create", products.length);
-
-    for (const product of products) {
-      await createProduct(product, provider);
-    }
-
     return {
       updatedProducts,
       skippedProducts,

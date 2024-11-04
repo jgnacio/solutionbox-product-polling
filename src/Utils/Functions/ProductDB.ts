@@ -2,10 +2,15 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import { getProductsByPage } from "../../_actions/getProductsByPage";
 import { ProductType } from "../../domain/product/entities/Product";
 import { createAndListCategories } from "../../_actions/defaults/createAllDefaultCategories";
+import { RelevantCategoriesType } from "../../domain/categories/defaultCategories";
 
 const prisma = new PrismaClient();
 
-export const createProduct = async (product: ProductType, provider?: any) => {
+export const createProduct = async (
+  product: ProductType,
+  category: RelevantCategoriesType,
+  provider: any
+) => {
   const partNumber = product.partNumber
     ? product.partNumber[0].partNumber
     : "Part Number not available";
@@ -47,7 +52,7 @@ export const createProduct = async (product: ProductType, provider?: any) => {
     let newProduct;
     let categoryFound = await prisma.category.findFirst({
       where: {
-        code: product.category.id,
+        code: category.code,
       },
     });
     if (!categoryFound) {
@@ -55,9 +60,9 @@ export const createProduct = async (product: ProductType, provider?: any) => {
       try {
         await prisma.category.create({
           data: {
-            name: product.category.name,
-            nameES: product.category.name,
-            code: product.category.id,
+            name: category.name,
+            nameES: category.nameES,
+            code: category.code,
           },
         });
       } catch (error) {
@@ -66,7 +71,7 @@ export const createProduct = async (product: ProductType, provider?: any) => {
 
       categoryFound = await prisma.category.findFirst({
         where: {
-          code: product.category.id,
+          code: category.code,
         },
       });
 
@@ -77,7 +82,7 @@ export const createProduct = async (product: ProductType, provider?: any) => {
         data: {
           title: product.title,
           price: product.price,
-          categoryId: categoryFound?.id,
+          categoryId: categoryFound.id,
           providerId: provider.ID_Provider,
           availability: product.availability,
           description: product.description,
