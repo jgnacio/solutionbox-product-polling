@@ -1,4 +1,4 @@
-import { defaultSolutionboxAPIRelevantCategories } from "../../API/defaults";
+import { UnicomCategoriesAdapter } from "../../API/Unicom/UnicomAPIRequets";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ export const createAndListCategories = async () => {
   try {
     // Inserta todas las categorías en la base de datos
     await Promise.all(
-      defaultSolutionboxAPIRelevantCategories.map(async (category) => {
+      UnicomCategoriesAdapter.categories.map(async (category) => {
         try {
           await prisma.category.create({
             data: {

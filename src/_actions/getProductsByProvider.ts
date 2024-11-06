@@ -23,7 +23,9 @@ export const getProductsByProvider = async ({
       try {
         const solutionboxAPIAdapter = new SolutionboxAPIProductAdapter();
 
-        productsSolutionbox = await solutionboxAPIAdapter.getAll();
+        const products = await solutionboxAPIAdapter.getByCategory(category);
+
+        productsSolutionbox = [...productsSolutionbox, ...products];
       } catch (error) {
         console.error(
           "Error getting featured products from Solutionbox API",
@@ -60,16 +62,19 @@ export const getProductsByProvider = async ({
         const products = await unicomAPIAdapter.getByCategory(category);
         productsUnicom = [...productsUnicom, ...products];
       } catch (error) {
-        console.error("Error getting featured products from Unicom API", error);
+        console.error(
+          `Error getting products <getByCategory> on category ${category.name} from Unicom API`,
+          error
+        );
       }
       break;
     case "PCService":
       try {
         const pcServiceAPIAdapter = new PCServiceAPIProductAdapter();
-        productsPCService = await pcServiceAPIAdapter.getAll();
+        productsPCService = await pcServiceAPIAdapter.getByCategory(category);
       } catch (error) {
         console.error(
-          "Error getting products <getFeatured> from PC Service API",
+          `Error getting products <getByCategory> on category ${category.name} from PC Service API`,
           error
         );
       }

@@ -43,10 +43,15 @@ export const createProduct = async (
   });
 
   if (productExists) {
-    console.log("Product already exists");
-    // Update Product
-    const productUpdated = updateProduct(productExists, product, provider);
-    console.log("Product updated", productUpdated);
+    const productUpdated = await updateProduct(
+      productExists,
+      product,
+      provider
+    );
+    console.log(
+      "Updated: ",
+      `Title: ${productUpdated.title} | ID: ${productUpdated.id} | SKU: ${productUpdated.sku}  | Provider: ${provider.name}  | Category: ${category.name} `
+    );
     return productUpdated;
   } else {
     let newProduct;
@@ -56,7 +61,9 @@ export const createProduct = async (
       },
     });
     if (!categoryFound) {
-      console.log("Category not found");
+      console.log(
+        `Category Name: ${category.name} | Code: ${category.code}, not found`
+      );
       try {
         await prisma.category.create({
           data: {
@@ -98,7 +105,10 @@ export const createProduct = async (
           onSale: product.onSale,
         },
       });
-      console.log("Product created", newProduct);
+      console.log(
+        "Created: ",
+        `Title: ${newProduct.title} | ID: ${newProduct.id} | SKU: ${newProduct.sku}  | Provider: ${provider.name}  | Category: ${category.name} `
+      );
     } catch (error) {
       console.log("Error creating product", product, error);
     }
@@ -150,46 +160,12 @@ export const updateProduct = async (
       onSale: productUpdated.onSale,
     },
   });
+  console.log(
+    "Updated: ",
+    `Title: ${productUpdated.title} | ID: ${productUpdated.id} | SKU: ${productUpdated.sku}  | Provider: ${provider.name}  | CategoryID: ${productDatabase.categoryId} `
+  );
 
   return updatedProduct;
-};
-
-export const filterProducts = async (
-  categoryCode: string,
-  providerId: number
-) => {
-  let category = await prisma.category.findFirst({
-    where: {
-      code: categoryCode,
-    },
-  });
-
-  if (!category) {
-    console.log("Category not found");
-    try {
-      await createAndListCategories();
-    } catch (error) {
-      console.error("Error creating default categories", error);
-    }
-
-    category = await prisma.category.findFirst({
-      where: {
-        code: categoryCode,
-      },
-    });
-
-    if (!category) return [];
-  }
-
-  return await prisma.product.findMany({
-    where: {
-      AND: [{ categoryId: category?.id }, { providerId: providerId }],
-    },
-    include: {
-      category: true,
-      provider: true,
-    },
-  });
 };
 
 export const sortedProducts = async (

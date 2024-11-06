@@ -173,8 +173,8 @@ export class UnicomAPIProductAdapter implements IProductRepository {
         description: response.descripcion || "",
         images: [],
         category: {
-          id: response.grupo_articulo?.codigo_grupo || "",
-          name: response.grupo_articulo?.descripcion || "",
+          id: "",
+          name: "",
         },
         marca: response.marca?.marca || "",
         provider: logoUnicom,
@@ -434,8 +434,10 @@ export class UnicomAPIProductAdapter implements IProductRepository {
             description: item.descripcion || "",
             provider: logoUnicom,
             images: item.fotos || [],
-            category:
-              (item.grupo_articulo && item.grupo_articulo.descripcion) || "",
+            category: {
+              id: "",
+              name: "",
+            },
             availability: mappedAvailability,
             marca: (item.marca && item.marca.marca) || "",
             stock: item.inventario || 0,

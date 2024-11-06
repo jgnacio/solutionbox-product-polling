@@ -10,6 +10,12 @@ import createAllDefaultProviders from "./_actions/defaults/createAllDefaultProvi
 import { createAndListCategories } from "./_actions/defaults/createAllDefaultCategories";
 import { getProductsByProvider } from "./_actions/getProductsByProvider";
 import { UnicomCategoriesAdapter } from "./API/Unicom/UnicomAPIRequets";
+import { PCServiceCategoriesAdapter } from "./API/PC Service/PCServiceAPIRequest";
+import {
+  CategoriesProvider,
+  RelevantCategoriesType,
+} from "./domain/categories/defaultCategories";
+import { SolutionboxCategoriesAdapter } from "./API/Solutionbox/SolutionboxAPIRequest";
 
 require("dotenv").config();
 
@@ -50,7 +56,27 @@ const main = async (providerName: string) => {
     let updatedProducts = 0;
     let skippedProducts = 0;
     let deletedProducts = 0;
-    for (const category of UnicomCategoriesAdapter.categories) {
+    let newProducts = 0;
+    let allProductsFetch: ProductType[] = [];
+
+    let categoriesAdapter: RelevantCategoriesType[] = [];
+
+    switch (provider.name) {
+      case "Unicom":
+        categoriesAdapter = UnicomCategoriesAdapter.categories;
+        break;
+      case "PCService":
+        categoriesAdapter = PCServiceCategoriesAdapter.categories;
+        break;
+      case "Solutionbox":
+        categoriesAdapter = SolutionboxCategoriesAdapter.categories;
+
+      default:
+        break;
+    }
+
+    for (const category of categoriesAdapter) {
+      products = [];
       const productsByCategory = await getProductsByProvider({
         provider: provider.name,
         category,
@@ -62,6 +88,7 @@ const main = async (providerName: string) => {
       }
 
       products = [...products, ...productsByCategory];
+      allProductsFetch = [...allProductsFetch, ...productsByCategory];
 
       for (const productOnDB of allProductsDB) {
         const product = products.find((p) => p.sku === productOnDB.sku);
@@ -85,20 +112,6 @@ const main = async (providerName: string) => {
             skippedProducts++;
             products = products.filter((p) => p.sku !== product.sku);
           }
-        } else {
-          console.log("Product not found. Delete: ", productOnDB.sku);
-          const findProduct = await prisma.product.findFirst({
-            where: { id: productOnDB.id },
-          });
-
-          if (!findProduct) {
-            console.log("New Product: ", productOnDB.sku);
-            continue;
-          }
-          await prisma.product.delete({
-            where: { id: productOnDB.id },
-          });
-          deletedProducts++;
         }
       }
 
@@ -106,13 +119,24 @@ const main = async (providerName: string) => {
 
       for (const product of products) {
         await createProduct(product, category, provider);
+        newProducts++;
+      }
+    }
+
+    for (const productOnDB of allProductsDB) {
+      const product = allProductsFetch.find((p) => p.sku === productOnDB.sku);
+
+      if (!product) {
+        console.log("Product deleted", productOnDB.sku);
+        await prisma.product.delete({ where: { id: productOnDB.id } });
+        deletedProducts++;
       }
     }
     return {
       updatedProducts,
       skippedProducts,
       deletedProducts,
-      newProducts: products.length,
+      newProducts,
     };
   } catch (error) {
     console.error("Error in main function", error);

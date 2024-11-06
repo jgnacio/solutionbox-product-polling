@@ -14,7 +14,10 @@ import {
 import { PCServiceAPITokenAdapter } from "./PCServiceAPITokenAdapter";
 import { getDateInYYYY } from "../../../Utils/Functions/DateFunctions";
 import { Prisma } from "@prisma/client";
-import { RelevantCategoriesType } from "../../../domain/categories/defaultCategories";
+import {
+  CategoriesProvider,
+  RelevantCategoriesType,
+} from "../../../domain/categories/defaultCategories";
 require("dotenv").config();
 
 type Request = {
@@ -128,10 +131,10 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
               );
 
               // Llama a productMapperList para mapear los productos con detalles
-              return this.productMapperList(
-                productsWithDetails,
-                category
-              ).flat();
+              return this.productMapperList(productsWithDetails, {
+                id: "",
+                name: "",
+              }).flat();
             })
           );
           productListMapped.push(productList.flat());
@@ -189,27 +192,13 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
           }
         }
 
-        return this.productMapper(product, category);
+        return this.productMapper(product, {
+          id: "",
+          name: "",
+        });
       });
       return productList.flat();
     }
-  }
-
-  async fetchProductsV2(category?: RelevantCategoriesType): Promise<Product[]> {
-    // const token = await new PCServiceAPITokenAdapter().getToken();
-    console.log(category);
-    // if (category) {
-    //   const productsByCategory = await axios.get(
-    //     `${this.API_PCSERVICE_URL}/categories/${category.code}/${category.providerCategories[0].providerCategoryCode}/products`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token.token}`,
-    //       },
-    //     }
-    //   );
-    // }
-
-    return [];
   }
 
   async getBySKU(sku: string): Promise<Product | null> {
@@ -218,35 +207,76 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
     const product = await this.fetchProduct(skuNumber).then((product) => {
       const categoryName = product.title.split(" ")[0];
       return this.productMapper(product, {
-        name: categoryName,
-        nameES: categoryName,
-        code: 0,
-        subCategories: [
-          {
-            nameES: categoryName,
-            name: categoryName,
-            code: 0,
-          },
-        ],
+        id: "",
+        name: "",
       });
     });
     return product;
   }
-  async getByCategory(category: string): Promise<Product[]> {
-    const categoryExists = PCServiceCategoriesAdapter.categories.find(
-      (categoryBase) => categoryBase.name === category
-    );
-    if (!categoryExists) {
+  async fetchProductsV2(category: CategoriesProvider): Promise<Product[]> {
+    const token = await new PCServiceAPITokenAdapter().getToken();
+
+    const productsByCategory = await axios
+      .get(
+        `${this.API_PCSERVICE_URL}/categories/${category.providerMainCategoryCode}/${category.providerCategoryCode}/products`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        return response.data as PCServiceRootObject;
+      });
+
+    if (!productsByCategory.childs[0].products) {
       return [];
     }
-    const productsList = this.fetchProductsV2(categoryExists);
+
+    const productList = await Promise.all(
+      productsByCategory.childs.map(async (child) => {
+        const productsWithDetails = await Promise.all(
+          child.products.map((product) => {
+            return this.fetchProduct(
+              product.id
+            ) as Promise<PCServiceProductDetails>;
+          })
+        );
+
+        // Llama a productMapperList para mapear los productos con detalles
+        return this.productMapperList(productsWithDetails, {
+          id: "",
+          name: "",
+        }).flat();
+      })
+    );
+
+    if (productList.length === 0) {
+      return [];
+    }
+
+    return productList.flat();
+  }
+  async getByCategory(category: RelevantCategoriesType): Promise<Product[]> {
+    if (category.providerCategories.length > 0) {
+      const productPromises = category.providerCategories.map(
+        (providerCategory) => this.fetchProductsV2(providerCategory)
+      );
+
+      const productsArray = await Promise.all(productPromises);
+
+      // Combina todos los productos en un solo array
+      const allProducts = productsArray.flat();
+      return allProducts;
+    }
 
     return [];
   }
   async getAll(): Promise<Product[]> {
-    this.getByCategory("Notebooks Gamer");
+    // this.getByCategory("Notebooks Gamer");
     return [];
   }
+
   getFeatured(request?: any): Promise<Product[]> {
     const productsList = this.fetchProducts({
       request: {
@@ -263,7 +293,10 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
 
   productMapper(
     product: PCServiceProductDetails,
-    category: PCServiceCategoryCodeType
+    category: {
+      id: string;
+      name: string;
+    }
   ): Product {
     const newProduct = new Product({
       partNumber: [
@@ -280,7 +313,7 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
       priceHistory: [],
       provider: logoPCService,
       category: {
-        id: category.code.toString(),
+        id: category.id,
         name: category.name,
       },
       stock: product.availability.stock,
@@ -296,7 +329,10 @@ export class PCServiceAPIProductAdapter implements IProductRepository {
   }
   productMapperList(
     products: PCServiceProductDetails[],
-    category: PCServiceCategoryCodeType
+    category: {
+      id: string;
+      name: string;
+    }
   ): Product[] {
     return products.map((product) => this.productMapper(product, category));
   }

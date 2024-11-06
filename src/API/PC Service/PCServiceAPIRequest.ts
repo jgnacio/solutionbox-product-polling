@@ -442,6 +442,8 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "NOTEBOOKS",
+          providerMainCategoryCode: 2075,
           providerCategoryName: "GAMERS",
           providerCategoryCode: 68558,
         },
@@ -455,19 +457,27 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
 
       providerCategories: [
         {
+          providerMainCategoryName: "NOTEBOOKS",
+          providerMainCategoryCode: 2075,
           providerCategoryName: "NOTEBOOKS",
           providerCategoryCode: 52200,
         },
         {
+          providerMainCategoryName: "NOTEBOOKS",
+          providerMainCategoryCode: 2075,
           providerCategoryName: 'NUEVOS 14" A  15,6"',
           providerCategoryCode: 3708,
         },
 
         {
+          providerMainCategoryName: "NOTEBOOKS",
+          providerMainCategoryCode: 2075,
           providerCategoryName: "NETBOOKS\r\nNUEVOS",
           providerCategoryCode: 2089,
         },
         {
+          providerMainCategoryName: "NOTEBOOKS",
+          providerMainCategoryCode: 2075,
           providerCategoryName: "2 EN 1",
           providerCategoryCode: 72175,
         },
@@ -481,14 +491,20 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
 
       providerCategories: [
         {
+          providerMainCategoryName: "APPLE",
+          providerMainCategoryCode: 66822,
           providerCategoryName: "MAC MINI",
           providerCategoryCode: 85422,
         },
         {
+          providerMainCategoryName: "APPLE",
+          providerMainCategoryCode: 66822,
           providerCategoryName: "MACBOOKS",
           providerCategoryCode: 66831,
         },
         {
+          providerMainCategoryName: "APPLE",
+          providerMainCategoryCode: 66822,
           providerCategoryName: "ACCESORIOS MACBOOK",
           providerCategoryCode: 66825,
         },
@@ -501,6 +517,8 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "MONITORES",
+          providerMainCategoryCode: 637,
           providerCategoryName: "MONITORES GAMING",
           providerCategoryCode: 71138,
         },
@@ -513,22 +531,32 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "STORAGE",
+          providerMainCategoryCode: 651,
           providerCategoryName: "HDD 2.5'' EXTERNOS",
           providerCategoryCode: 2081,
         },
         {
+          providerMainCategoryName: "STORAGE",
+          providerMainCategoryCode: 651,
           providerCategoryName: "HDD 3.5'' INTERNOS",
           providerCategoryCode: 3705,
         },
         {
+          providerMainCategoryName: "STORAGE",
+          providerMainCategoryCode: 651,
           providerCategoryName: 'SSD 2.5"  INTERNOS',
           providerCategoryCode: 15035,
         },
         {
+          providerMainCategoryName: "STORAGE",
+          providerMainCategoryCode: 651,
           providerCategoryName: "SSD EXTERNO 2.5",
           providerCategoryCode: 61068,
         },
         {
+          providerMainCategoryName: "STORAGE",
+          providerMainCategoryCode: 651,
           providerCategoryName: "SSD M2",
           providerCategoryCode: 72423,
         },
@@ -548,6 +576,8 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "CASES",
+          providerMainCategoryCode: 635,
           providerCategoryName: "GABINETES",
           providerCategoryCode: 399,
         },
@@ -560,6 +590,8 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "GPU",
+          providerMainCategoryCode: 959,
           providerCategoryName: "TARJETAS VIDEO GAMING",
           providerCategoryCode: 401,
         },
@@ -572,14 +604,20 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "MEMORIES",
+          providerMainCategoryCode: 211,
           providerCategoryName: "DIMM DDR4",
           providerCategoryCode: 67230,
         },
         {
+          providerMainCategoryName: "MEMORIES",
+          providerMainCategoryCode: 211,
           providerCategoryName: "SODIMM DDR4",
-          providerCategoryCode: 213,
+          providerCategoryCode: 67231,
         },
         {
+          providerMainCategoryName: "MEMORIES",
+          providerMainCategoryCode: 211,
           providerCategoryName: "SODIM DDR5",
           providerCategoryCode: 89264,
         },
@@ -592,10 +630,14 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "MOTHERBOARDS",
+          providerMainCategoryCode: 698,
           providerCategoryName: "AMD",
           providerCategoryCode: 312,
         },
         {
+          providerMainCategoryName: "MOTHERBOARDS",
+          providerMainCategoryCode: 698,
           providerCategoryName: "INTEL",
           providerCategoryCode: 311,
         },
@@ -608,74 +650,110 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "HEADPHONES - MICROPHONES",
+          providerMainCategoryCode: 447,
           providerCategoryName: "ACCESORIOS",
           providerCategoryCode: 69285,
         },
         {
+          providerMainCategoryName: "HEADPHONES - MICROPHONES",
+          providerMainCategoryCode: 447,
           providerCategoryName: "BLUETOOTH",
           providerCategoryCode: 40465,
         },
         {
+          providerMainCategoryName: "HEADPHONES - MICROPHONES",
+          providerMainCategoryCode: 447,
           providerCategoryName: "CABLEADOS",
           providerCategoryCode: 359,
         },
         {
+          providerMainCategoryName: "HEADPHONES - MICROPHONES",
+          providerMainCategoryCode: 447,
           providerCategoryName: "CABLEADOS",
           providerCategoryCode: 272,
         },
         {
+          providerMainCategoryName: "HEADPHONES - MICROPHONES",
+          providerMainCategoryCode: 447,
           providerCategoryName: "MICROFONOS",
           providerCategoryCode: 69413,
         },
         {
+          providerMainCategoryName: "HEADPHONES - MICROPHONES",
+          providerMainCategoryCode: 447,
           providerCategoryName: "HEADSETS",
           providerCategoryCode: 69270,
         },
         {
+          providerMainCategoryName: "FOR NOTEBOOKS",
+          providerMainCategoryCode: 531,
           providerCategoryName: "ACCESORIOS",
           providerCategoryCode: 306,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "COMBOS CABLEADOS",
           providerCategoryCode: 382,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "COMBOS ERGONOMICO",
           providerCategoryCode: 83223,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "COMBOS INALÁMBRICOS",
           providerCategoryCode: 381,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "TECLADO ERGONOMICO",
           providerCategoryCode: 83239,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "TECLADOS GAMING",
           providerCategoryCode: 67672,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "TECLADOS INALÁMBRICOS",
           providerCategoryCode: 11999,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "TECLADOS MINI",
           providerCategoryCode: 11886,
         },
         {
+          providerMainCategoryName: "KEYBOARDS - COMBOS",
+          providerMainCategoryCode: 440,
           providerCategoryName: "TECLADOS USB",
           providerCategoryCode: 383,
         },
         {
+          providerMainCategoryName: "WEBCAMS",
+          providerMainCategoryCode: 493,
           providerCategoryName: "WEBCAM",
           providerCategoryCode: 274,
         },
         {
+          providerMainCategoryName: "SPEAKERS",
+          providerMainCategoryCode: 248,
           providerCategoryName: "BARRAS DE SONIDO",
           providerCategoryCode: 56276,
         },
         {
+          providerMainCategoryName: "SPEAKERS",
+          providerMainCategoryCode: 248,
           providerCategoryName: "PARLANTES BT",
           providerCategoryCode: 35371,
         },
@@ -688,6 +766,8 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "CPU",
+          providerMainCategoryCode: 696,
           providerCategoryName: "AMD",
           providerCategoryCode: 346,
         },
@@ -700,6 +780,8 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "PC Service",
       providerCategories: [
         {
+          providerMainCategoryName: "COOLING",
+          providerMainCategoryCode: 830,
           providerCategoryName: "COOLING",
           providerCategoryCode: 321,
         },

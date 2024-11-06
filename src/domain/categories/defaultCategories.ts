@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client";
 
-interface CategoriesProvider {
+export interface CategoriesProvider {
+  providerMainCategoryName?: string | number;
+  providerMainCategoryCode?: number | string;
   providerCategoryName: string;
   providerCategoryCode: number | string;
 }
