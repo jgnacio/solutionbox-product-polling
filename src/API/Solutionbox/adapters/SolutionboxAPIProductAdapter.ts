@@ -97,30 +97,36 @@ export class SolutionboxAPIProductAdapter implements IProductRepository {
   }
 
   async getByCategory(category: RelevantCategoriesType): Promise<Product[]> {
-    const products = await this.getInstance();
-    console.log("Getting products by category", category.name);
     let productsFiltered: Product[] = [];
 
     for (const cat of category.providerCategories) {
-      // Convertimos cada palabra clave a una cadena, si está definida, y la pasamos a mayúsculas
       const keywords = [
-        cat.providerMainCategoryCode,
-        cat.providerMainCategoryName,
-        cat.providerCategoryCode,
-        cat.providerCategoryName,
-      ]
-        .filter(
-          (word): word is string | number => word !== undefined && word !== null
-        ) // Filtra valores undefined y null de forma segura
-        .map((word) => word.toString().toUpperCase());
-
-      const regex = new RegExp(keywords.join("|"), "i");
-
-      const productsByCategory = products.filter((product) =>
-        regex.test(product.title.toUpperCase())
+        cat.providerMainCategoryCode !== undefined
+          ? cat.providerMainCategoryCode.toString().toUpperCase()
+          : undefined,
+        cat.providerMainCategoryName !== undefined
+          ? cat.providerMainCategoryName.toString().toUpperCase()
+          : undefined,
+        cat.providerCategoryCode !== undefined
+          ? cat.providerCategoryCode.toString().toUpperCase()
+          : undefined,
+        cat.providerCategoryName !== undefined
+          ? cat.providerCategoryName.toUpperCase()
+          : undefined,
+      ].filter(
+        (word): word is string => typeof word === "string" && word.trim() !== ""
       );
 
-      productsFiltered.push(...productsByCategory);
+      if (keywords.length > 0) {
+        console.log("Keywords", keywords);
+        const products = await this.getInstance();
+
+        productsFiltered = products.filter((product) => {
+          if (!product.title) return false;
+          const productTitle = product.title.toUpperCase();
+          return keywords.some((keyword) => productTitle.includes(keyword));
+        });
+      }
     }
 
     return productsFiltered;
