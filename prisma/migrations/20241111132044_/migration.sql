@@ -27,6 +27,9 @@ CREATE TABLE `Provider` (
     `name` VARCHAR(191) NOT NULL,
     `contact` VARCHAR(191) NOT NULL,
     `direction` TEXT NOT NULL,
+    `searchPageUrl` VARCHAR(191) NOT NULL,
+    `mainPageUrl` VARCHAR(191) NOT NULL,
+    `logoUrl` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Provider_name_key`(`name`),
     PRIMARY KEY (`ID_Provider`)
