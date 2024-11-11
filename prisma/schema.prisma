@@ -37,11 +37,14 @@ model Product {
 }
 
 model Provider {
-  ID_Provider Int       @id @default(autoincrement())
-  name        String    @unique
-  contact     String
-  direction   String    @db.Text()
-  products    Product[]
+  ID_Provider   Int       @id @default(autoincrement())
+  name          String    @unique
+  contact       String
+  direction     String    @db.Text()
+  products      Product[]
+  searchPageUrl String
+  mainPageUrl   String
+  logoUrl       String
 }
 
 model Category {
