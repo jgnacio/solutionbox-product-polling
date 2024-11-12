@@ -433,13 +433,13 @@ export const defaultPCServiceRelevantCategories = [
 ];
 
 export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
-  provider: "PC Service",
+  provider: "PCService",
   categories: [
     {
       name: "Notebooks Gamer",
       nameES: "Laptops Gamer",
       code: "notebooks-gamer",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "NOTEBOOKS",
@@ -453,7 +453,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Notebooks Home/Office",
       nameES: "Laptops Home/Office",
       code: "notebooks-home-office",
-      provider: "PC Service",
+      provider: "PCService",
 
       providerCategories: [
         {
@@ -487,7 +487,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "MacBooks",
       nameES: "MacBooks",
       code: "macbooks",
-      provider: "PC Service",
+      provider: "PCService",
 
       providerCategories: [
         {
@@ -514,7 +514,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Monitors",
       nameES: "Monitores",
       code: "monitors",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "MONITORES",
@@ -528,7 +528,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Storage",
       nameES: "Almacenamiento",
       code: "storage",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "STORAGE",
@@ -566,14 +566,14 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Power Supplies",
       nameES: "Fuentes",
       code: "power-supplies",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [],
     },
     {
       name: "Cases",
       nameES: "Gabinetes",
       code: "cases",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "CASES",
@@ -587,7 +587,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "GPU",
       nameES: "GPU",
       code: "gpu",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "GPU",
@@ -601,7 +601,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "RAM",
       nameES: "RAM",
       code: "ram",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "MEMORIES",
@@ -627,7 +627,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Motherboards",
       nameES: "Motherboards",
       code: "motherboards",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "MOTHERBOARDS",
@@ -647,7 +647,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Peripherals",
       nameES: "Periféricos",
       code: "peripherals",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "HEADPHONES - MICROPHONES",
@@ -763,7 +763,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "CPU",
       nameES: "CPU",
       code: "cpu",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "CPU",
@@ -777,7 +777,7 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Cooling",
       nameES: "Refrigeración",
       code: "cooling",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [
         {
           providerMainCategoryName: "COOLING",
@@ -791,14 +791,14 @@ export const PCServiceCategoriesAdapter: RelevantCategoriesBASE = {
       name: "Chairs",
       nameES: "Sillas",
       code: "chairs",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [],
     },
     {
       name: "Other",
       nameES: "Otros",
       code: "other",
-      provider: "PC Service",
+      provider: "PCService",
       providerCategories: [],
     },
   ],
