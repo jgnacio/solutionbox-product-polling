@@ -6,6 +6,7 @@ import { Product, ProductType } from "../domain/product/entities/Product";
 import { ProductClassToObj } from "../Utils/Functions/ClassToObject";
 import { defaultUnicomAPIRelevantCategories } from "../API/Unicom/UnicomAPIRequets";
 import { RelevantCategoriesType } from "../domain/categories/defaultCategories";
+import { CDRMediosAPIProductAdapter } from "../API/CDR/adapters/CDRMediosAPIProductAdapter";
 
 export const getProductsByProvider = async ({
   provider,
@@ -17,6 +18,7 @@ export const getProductsByProvider = async ({
   let productsUnicom: Product[] = [];
   let productsPCService: Product[] = [];
   let productsSolutionbox: Product[] = [];
+  let productsCDR: Product[] = [];
 
   switch (provider) {
     case "Solutionbox":
@@ -38,27 +40,6 @@ export const getProductsByProvider = async ({
       try {
         const unicomAPIAdapter = new UnicomAPIProductAdapter();
 
-        // const categories = defaultUnicomAPIRelevantCategories.map(
-        //   (category) => category.code
-        // );
-
-        // for (const category of categories) {
-        //   const products = await unicomAPIAdapter.getAll({
-        //     request: {
-        //       solo_articulos_destacados: false,
-        //       codigo_grupo: category,
-        //       tipo_informe: "completo",
-        //       solo_favoritos: false,
-        //       rango_articulos_informe: {
-        //         desde_articulo_nro: 0,
-        //         hasta_articulo_nro: 200,
-        //       },
-        //     },
-        //   });
-
-        //   productsUnicom = [...productsUnicom, ...products];
-        // }
-
         const products = await unicomAPIAdapter.getByCategory(category);
         productsUnicom = [...productsUnicom, ...products];
       } catch (error) {
@@ -79,6 +60,16 @@ export const getProductsByProvider = async ({
         );
       }
       break;
+    case "CDR":
+      try {
+        const cdrAPIAdapter = new CDRMediosAPIProductAdapter();
+        productsCDR = await cdrAPIAdapter.getByCategory(category);
+      } catch (error) {
+        console.error(
+          `Error getting products <getByCategory> on category ${category.name} from CDR API`,
+          error
+        );
+      }
     default:
       console.error("Provider not found");
       break;
@@ -96,10 +87,15 @@ export const getProductsByProvider = async ({
     ProductClassToObj(product)
   );
 
+  const productCDRObj = productsCDR.map((product) =>
+    ProductClassToObj(product)
+  );
+
   const productList = [
     ...productUnicomObj,
     ...productPCServiceObj,
     ...productSolutionboxObj,
+    ...productCDRObj,
   ];
 
   return productList;

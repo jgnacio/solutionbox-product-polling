@@ -16,6 +16,7 @@ import {
   RelevantCategoriesType,
 } from "./domain/categories/defaultCategories";
 import { SolutionboxCategoriesAdapter } from "./API/Solutionbox/SolutionboxAPIRequest";
+import { CDRCategoriesAdapter } from "./API/CDR/CDRAPIRequest";
 
 require("dotenv").config();
 
@@ -70,7 +71,8 @@ const main = async (providerName: string) => {
         break;
       case "Solutionbox":
         categoriesAdapter = SolutionboxCategoriesAdapter.categories;
-
+      case "CDR":
+        categoriesAdapter = CDRCategoriesAdapter.categories;
       default:
         break;
     }

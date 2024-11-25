@@ -32,4 +32,16 @@ export const defaultProviders = [
       "https://res.cloudinary.com/dhq5ewbyu/image/upload/v1729604229/ASLAN/vkr0voqeoh47duv94jw3.png",
     products: [],
   },
+  {
+    name: "CDR",
+    contact: "2924 9009",
+    direction:
+      "Prof Carlos Bacigalupi 2084, 11800 Montevideo, Departamento de Montevideo",
+    mainPageUrl: "https://www.cdrmedios.com/",
+    searchPageUrl:
+      "https://www.cdrmedios.com/productos/?secc=productos&buscar=",
+    logoUrl:
+      "https://www.cdrmedios.com/artworks/artworks_cdrmedios2020com/logo.svg",
+    products: [],
+  },
 ];

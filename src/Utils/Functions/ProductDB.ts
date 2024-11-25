@@ -94,7 +94,7 @@ export const createProduct = async (
           availability: product.availability,
           description: product.description,
           marca: product.marca,
-          partNumber: partNumber,
+          partNumber: partNumber || product.sku,
           sku: product.sku,
           stock: product.stock,
           createdAt: new Date(),
