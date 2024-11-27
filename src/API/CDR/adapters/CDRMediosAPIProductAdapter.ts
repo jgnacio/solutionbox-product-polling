@@ -62,7 +62,7 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
     const params = {
       email: process.env.API_CDRMEDIOS_USER,
       token: process.env.API_CDRMEDIOS_TOKEN,
-      fecha: getFormattedDate(15),
+      fecha: getFormattedDate(30),
       formato: "",
     };
 
