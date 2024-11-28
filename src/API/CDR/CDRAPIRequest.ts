@@ -45,7 +45,7 @@ export const CDRCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "CDR",
       providerCategories: [
         {
-          providerCategoryName: "",
+          providerCategoryName: "macbook",
           providerCategoryCode: "",
           providerMainCategoryName: "",
           providerMainCategoryCode: "",
