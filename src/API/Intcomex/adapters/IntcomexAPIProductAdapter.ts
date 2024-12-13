@@ -264,7 +264,7 @@ export class IntcomexAPIProductAdapter implements IProductRepository {
       priceHistory: [],
       stock: product.stock,
       availability: product.stock > 0 ? "in_stock" : "out_of_stock",
-      title: product.Description.slice(0, 20),
+      title: product.Description.slice(0, 50),
       submitDate: new Date(),
       images: [],
     });
