@@ -17,6 +17,7 @@ import {
 } from "./domain/categories/defaultCategories";
 import { SolutionboxCategoriesAdapter } from "./API/Solutionbox/SolutionboxAPIRequest";
 import { CDRCategoriesAdapter } from "./API/CDR/CDRAPIRequest";
+import { IntcomexCategoriesAdapter } from "./API/Intcomex/IntcomexAPIRequest";
 
 require("dotenv").config();
 
@@ -73,6 +74,8 @@ const main = async (providerName: string) => {
         categoriesAdapter = SolutionboxCategoriesAdapter.categories;
       case "CDR":
         categoriesAdapter = CDRCategoriesAdapter.categories;
+      case "Intcomex":
+        categoriesAdapter = IntcomexCategoriesAdapter.categories;
       default:
         break;
     }
@@ -105,12 +108,12 @@ const main = async (providerName: string) => {
             productOnDB.stock !== product.stock ||
             productOnDB.partNumber !== partNumber
           ) {
-            console.log("Product updated", product.id);
+            // console.log("Product updated", product.id);
             await updateProduct(productOnDB, product, provider);
             updatedProducts++;
             products = products.filter((p) => p.sku !== product.sku);
           } else {
-            console.log("Product skipped", product.sku);
+            // console.log("Product skipped", product.sku);
             skippedProducts++;
             products = products.filter((p) => p.sku !== product.sku);
           }

@@ -7,6 +7,7 @@ import { ProductClassToObj } from "../Utils/Functions/ClassToObject";
 import { defaultUnicomAPIRelevantCategories } from "../API/Unicom/UnicomAPIRequets";
 import { RelevantCategoriesType } from "../domain/categories/defaultCategories";
 import { CDRMediosAPIProductAdapter } from "../API/CDR/adapters/CDRMediosAPIProductAdapter";
+import { IntcomexAPIProductAdapter } from "../API/Intcomex/adapters/IntcomexAPIProductAdapter";
 
 export const getProductsByProvider = async ({
   provider,
@@ -19,6 +20,7 @@ export const getProductsByProvider = async ({
   let productsPCService: Product[] = [];
   let productsSolutionbox: Product[] = [];
   let productsCDR: Product[] = [];
+  let productsIntcomex: Product[] = [];
 
   switch (provider) {
     case "Solutionbox":
@@ -70,6 +72,16 @@ export const getProductsByProvider = async ({
           error
         );
       }
+    case "Intcomex":
+      try {
+        const intcomexAPIAdapter = new IntcomexAPIProductAdapter();
+        productsIntcomex = await intcomexAPIAdapter.getByCategory(category);
+      } catch (error) {
+        console.error(
+          `Error getting products <getByCategory> on category ${category.name} from Intcomex API`,
+          error
+        );
+      }
     default:
       console.error("Provider not found");
       break;
@@ -90,12 +102,16 @@ export const getProductsByProvider = async ({
   const productCDRObj = productsCDR.map((product) =>
     ProductClassToObj(product)
   );
+  const productIntcomexObj = productsIntcomex.map((product) =>
+    ProductClassToObj(product)
+  );
 
   const productList = [
     ...productUnicomObj,
     ...productPCServiceObj,
     ...productSolutionboxObj,
     ...productCDRObj,
+    ...productIntcomexObj,
   ];
 
   return productList;

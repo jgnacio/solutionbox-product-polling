@@ -306,7 +306,7 @@ export class UnicomAPIProductAdapter implements IProductRepository {
   }
 
   async getByCategory(category: RelevantCategoriesType): Promise<Product[]> {
-    console.log("category", category);
+    // console.log("category", category);
     if (category.providerCategories.length > 0) {
       const productPromises = category.providerCategories.map(
         (providerCategory) =>
@@ -328,7 +328,15 @@ export class UnicomAPIProductAdapter implements IProductRepository {
 
       // Combina todos los productos en un solo array
       const allProducts = productsArray.flat();
-      console.log("allProducts", allProducts);
+      if (category.code === "cases") {
+        console.log(
+          allProducts
+            .filter((product) =>
+              product.title.toLowerCase().includes("gabinete")
+            )
+            .map((product) => product.title)
+        );
+      }
       return allProducts;
     }
 

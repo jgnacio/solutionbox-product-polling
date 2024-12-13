@@ -44,4 +44,15 @@ export const defaultProviders = [
       "https://www.cdrmedios.com/artworks/artworks_cdrmedios2020com/logo.svg",
     products: [],
   },
+  {
+    name: "Intcomex",
+    contact: "2924 9999",
+    direction:
+      "Gral. César Díaz 1389, 11800 Montevideo, Departamento de Montevideo",
+    mainPageUrl: "https://store.intcomex.com/es-xuy",
+    searchPageUrl:
+      "https://store.intcomex.com/es-xuy/Products/ByKeyword?typeSearch=&r=true&term=",
+    logoUrl: "https://store.intcomex.com/Content/Images/Layout/Logo.png",
+    products: [],
+  },
 ];
