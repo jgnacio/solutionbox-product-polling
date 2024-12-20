@@ -74,8 +74,10 @@ const main = async (providerName: string) => {
         categoriesAdapter = SolutionboxCategoriesAdapter.categories;
       case "CDR":
         categoriesAdapter = CDRCategoriesAdapter.categories;
+        break;
       case "Intcomex":
         categoriesAdapter = IntcomexCategoriesAdapter.categories;
+        break;
       default:
         break;
     }
@@ -123,6 +125,9 @@ const main = async (providerName: string) => {
       console.log("Remaining products to create", products.length);
 
       for (const product of products) {
+        // Eliminar duplicados
+        let deleteDuplicates = new Set(products);
+        products = [...deleteDuplicates];
         await createProduct(product, category, provider);
         newProducts++;
       }

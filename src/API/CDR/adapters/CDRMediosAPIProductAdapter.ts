@@ -37,7 +37,6 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
     }
 
     console.log("Products fetched from CDR API");
-    console.log(CDRMediosAPIProductAdapter.products.length);
 
     return CDRMediosAPIProductAdapter.products;
   }
@@ -152,6 +151,10 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
             productTitle.includes(keyword)
           );
         });
+
+        // Eliminamos duplicados
+        let deleteDuplicates = new Set(productsFiltered);
+        productsFiltered = [...deleteDuplicates];
       }
     }
 
