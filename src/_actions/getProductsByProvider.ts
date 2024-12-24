@@ -22,6 +22,8 @@ export const getProductsByProvider = async ({
   let productsCDR: Product[] = [];
   let productsIntcomex: Product[] = [];
 
+  console.log("Provider: ", provider);
+
   switch (provider) {
     case "Solutionbox":
       try {
@@ -54,7 +56,8 @@ export const getProductsByProvider = async ({
     case "PCService":
       try {
         const pcServiceAPIAdapter = new PCServiceAPIProductAdapter();
-        productsPCService = await pcServiceAPIAdapter.getByCategory(category);
+        const products = await pcServiceAPIAdapter.getByCategory(category);
+        productsPCService = [...productsPCService, ...products];
       } catch (error) {
         console.error(
           `Error getting products <getByCategory> on category ${category.name} from PC Service API`,
@@ -65,26 +68,30 @@ export const getProductsByProvider = async ({
     case "CDR":
       try {
         const cdrAPIAdapter = new CDRMediosAPIProductAdapter();
-        productsCDR = await cdrAPIAdapter.getByCategory(category);
+        const products = await cdrAPIAdapter.getByCategory(category);
+        productsCDR = [...productsCDR, ...products];
       } catch (error) {
         console.error(
           `Error getting products <getByCategory> on category ${category.name} from CDR API`,
           error
         );
       }
+      break;
     case "Intcomex":
       try {
         const intcomexAPIAdapter = new IntcomexAPIProductAdapter();
-        productsIntcomex = await intcomexAPIAdapter.getByCategory(category);
+        const products = await intcomexAPIAdapter.getByCategory(category);
+        productsIntcomex = [...productsIntcomex, ...products];
       } catch (error) {
         console.error(
           `Error getting products <getByCategory> on category ${category.name} from Intcomex API`,
           error
         );
       }
-    default:
-      console.error("Provider not found");
       break;
+    default:
+      console.error("Provider not found Get Products By Provider");
+      return [];
   }
 
   const productUnicomObj = productsUnicom.map((product) =>

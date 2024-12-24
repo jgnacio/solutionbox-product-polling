@@ -79,7 +79,8 @@ const main = async (providerName: string) => {
         categoriesAdapter = IntcomexCategoriesAdapter.categories;
         break;
       default:
-        break;
+        console.error("Provider not found in categories");
+        throw new Error("Provider not found in categories");
     }
 
     for (const category of categoriesAdapter) {

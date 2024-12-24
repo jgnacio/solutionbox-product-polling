@@ -8,7 +8,7 @@ const soap = require("soap");
 export class CDRMediosAPIProductAdapter implements IProductRepository {
   private readonly API_URL = process.env.API_CDRMEDIOS_URL || "";
   private soapClient: any | null = null; // Variable para almacenar el cliente SOAP
-  private static lastFetched: number | null = null;
+  private static lastFetched: Date | null = null;
   private static readonly CACHE_DURATION = 1.5 * 60 * 60 * 1000; // 1.5 hours in milliseconds
   private static products: Product[];
 
@@ -20,7 +20,7 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
     console.log(
       `Is Ready to fetch products?: ${
         !CDRMediosAPIProductAdapter.lastFetched ||
-        now - CDRMediosAPIProductAdapter.lastFetched >=
+        now - CDRMediosAPIProductAdapter.lastFetched.getTime() >=
           CDRMediosAPIProductAdapter.CACHE_DURATION
           ? "YYYYYYYYYY"
           : "NNNNNNNNNN"
@@ -29,14 +29,14 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
 
     if (
       !CDRMediosAPIProductAdapter.lastFetched ||
-      now - CDRMediosAPIProductAdapter.lastFetched >=
+      now - CDRMediosAPIProductAdapter.lastFetched.getTime() >=
         CDRMediosAPIProductAdapter.CACHE_DURATION
     ) {
-      CDRMediosAPIProductAdapter.lastFetched = now;
+      CDRMediosAPIProductAdapter.lastFetched = new Date();
       CDRMediosAPIProductAdapter.products = await this.fetchProducts();
     }
 
-    console.log("Products fetched from CDR API");
+    console.log("Products fetched from CDRMedios API");
 
     return CDRMediosAPIProductAdapter.products;
   }
@@ -175,18 +175,17 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
   }
 
   mapToProduct(data: CDRAPIProduct): Product | null {
-    console.log("Mapping product:", data);
     try {
       const product = new Product({
         sku: data.codigo,
         title: data.nombre,
         description: data.descripcion,
         marca: data.marca || "",
-        price: parseFloat(data.precio),
+        price: parseFloat(data.precio) > 0 ? parseFloat(data.precio) : 0.123,
         availability: parseInt(data.stock) > 0 ? "in_stock" : "out_of_stock",
         partNumber: [
           {
-            partNumber: data.nro_parte,
+            partNumber: data.nro_parte || data.codigo,
             ean: 0,
             units_x_box: 1,
           },
@@ -207,7 +206,6 @@ export class CDRMediosAPIProductAdapter implements IProductRepository {
     }
   }
   mapProducts(data: CDRAPIProduct[]): Product[] {
-    console.log("Mapping products:", data);
     return data
       .map((product) => this.mapToProduct(product))
       .filter((p) => p !== null) as Product[];

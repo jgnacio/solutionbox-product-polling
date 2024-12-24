@@ -1,17 +1,15 @@
+import axios from "axios";
+import { RelevantCategoriesType } from "../../../domain/categories/defaultCategories";
 import { Product } from "../../../domain/product/entities/Product";
 import { IProductRepository } from "../../../domain/product/repositories/IProductRepository";
 import { getUTCTimestamp } from "../../../Utils/Functions/DateFunctions";
 import { hashSHA256 } from "../../../Utils/Functions/hashes";
-import axios from "axios";
+import { IntcomexAPIPriceType } from "../entities/IntcomexAPIPrice";
 import {
   IntcomexAPIProductsTypeExtended,
   IntcomexAPIProductType,
 } from "../entities/IntcomexAPIProducts";
-import { IntcomexAPIPriceType } from "../entities/IntcomexAPIPrice";
 import { IntcomexAPIStockType } from "../entities/IntcomexAPIStock";
-import { RelevantCategoriesType } from "../../../domain/categories/defaultCategories";
-import { IntcomextAPICategoryType } from "../entities/IntcomextAPICategory";
-import { IntcomexCategoriesAdapter } from "../IntcomexAPIRequest";
 
 export class IntcomexAPIProductAdapter implements IProductRepository {
   private readonly API_URL = process.env.API_INTCOMEX_URL || "";
@@ -43,7 +41,7 @@ export class IntcomexAPIProductAdapter implements IProductRepository {
       IntcomexAPIProductAdapter.products = await this.fetchProducts();
     }
 
-    console.log("Products fetched from CDR API");
+    console.log("Products fetched from Intcomex API");
     console.log(IntcomexAPIProductAdapter.products.length);
 
     return IntcomexAPIProductAdapter.products;
