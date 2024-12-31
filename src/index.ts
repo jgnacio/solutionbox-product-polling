@@ -72,6 +72,7 @@ const main = async (providerName: string) => {
         break;
       case "Solutionbox":
         categoriesAdapter = SolutionboxCategoriesAdapter.categories;
+        break;
       case "CDR":
         categoriesAdapter = CDRCategoriesAdapter.categories;
         break;
