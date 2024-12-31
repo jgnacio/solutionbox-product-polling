@@ -204,10 +204,10 @@ export const SolutionboxCategoriesAdapter: RelevantCategoriesBASE = {
       provider: "Solutionbox",
       providerCategories: [
         {
-          providerCategoryName: "",
-          providerCategoryCode: "",
-          providerMainCategoryName: "",
-          providerMainCategoryCode: "",
+          providerCategoryName: "targus",
+          providerCategoryCode: "backpack",
+          providerMainCategoryName: "backpacks",
+          providerMainCategoryCode: "mochilas",
         },
       ],
     },
